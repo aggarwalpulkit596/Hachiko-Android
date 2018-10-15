@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_button_background"
+    tools:context="com.hachiko.hachiko.MainActivity"
+    android:paddingStart="15dp"
+    android:paddingEnd="15dp">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/login_button_background_corner"
+        android:text="@string/otp_login"
+        android:id="@+id/otpLoginBtn"
+        android:layout_centerInParent="true"
+        android:textColor="@color/white"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/login_button_background_corner"
+        android:text="@string/gmail_login"
+        android:id="@+id/gmailLoginBtn"
+        android:layout_below="@+id/otpLoginBtn"
+        android:textColor="@color/white"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/login_button_background_corner"
+        android:text="@string/guest_login"
+        android:id="@+id/guestLoginBtn"
+        android:layout_below="@+id/gmailLoginBtn"
+        android:textColor="@color/white"
+        android:layout_marginTop="20dp"/>
+
+</RelativeLayout>

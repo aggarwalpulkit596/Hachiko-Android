@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_button_background"
+    tools:context="com.hachiko.hachiko.login.SignupActivity"
+    android:paddingStart="15dp"
+    android:paddingEnd="15dp"
+    android:paddingTop="125dp"
+    android:orientation="vertical">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/dogNameEditText"
+        android:background="@drawable/login_button_background_corner"
+        android:hint="@string/enter_dog_name"
+        android:paddingStart="15dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/ownerNameEditText"
+        android:background="@drawable/login_button_background_corner"
+        android:hint="@string/enter_owner_name"
+        android:paddingStart="15dp"
+        android:textColor="@color/white"
+        android:layout_marginTop="10dp"
+        android:textColorHint="@color/white"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/dogBreedEditText"
+        android:background="@drawable/login_button_background_corner"
+        android:hint="@string/enter_dog_breed"
+        android:paddingStart="15dp"
+        android:textColor="@color/white"
+        android:layout_marginTop="10dp"
+        android:textColorHint="@color/white"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/ownerlocationEditText"
+        android:background="@drawable/login_button_background_corner"
+        android:hint="@string/enter_owner_location"
+        android:paddingStart="15dp"
+        android:textColor="@color/white"
+        android:layout_marginTop="10dp"
+        android:textColorHint="@color/white"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_button_background_corner"
+            android:text="@string/sign_up"
+            android:id="@+id/signUpbtn"
+            android:textColor="@color/white"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

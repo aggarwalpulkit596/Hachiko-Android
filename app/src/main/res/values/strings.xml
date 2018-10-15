@@ -1,3 +1,34 @@
 <resources>
     <string name="app_name">Hachiko-Android</string>
+
+    <!---> Database Keys <-->
+    <string name="users">users</string>
+    <string name="dog_name">dog_name</string>
+    <string name="dog_breed">dog_breed</string>
+    <string name="owner_name">owner_name</string>
+    <string name="owner_loc">owner_location</string>
+
+    <!---> Main Activity <-->
+    <string name="otp_login">OTP LOGIN</string>
+    <string name="gmail_login">GMAIL LOGIN</string>
+    <string name="guest_login">GUEST LOGIN</string>
+
+    <!---> Login Activity <-->
+    <string name="send_otp">SEND OTP</string>
+
+    <!---> OTP Activity <-->
+    <string name="otp_empty">OTP cannot be empty</string>
+    <string name="otp_short">OTP is too short</string>
+    <string name="user_exist">USER EXIST</string>
+    <string name="otp_incorrect">INCORRECT OTP</string>
+
+    <!---> SignUp Activity <-->
+    <string name="sign_up">Sign Up</string>
+    <string name="enter_owner_location">Enter Owner\'s Location</string>
+    <string name="enter_dog_breed">Enter Dog\'s Breed</string>
+    <string name="enter_owner_name">Enter Owner\'s Name</string>
+    <string name="enter_dog_name">Enter Dog\'s Name</string>
+    <string name="all_fields_are_complusory">All fields are mandatory!!</string>
+    <string name="user_added_successfully">USER ADDED SUCCESSFULLY</string>
+    <string name="user_addition_failed">USER ADDITION FAILED</string>
 </resources>
