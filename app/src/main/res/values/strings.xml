@@ -10,7 +10,7 @@
 
     <!---> Main Activity <-->
     <string name="otp_login">OTP LOGIN</string>
-    <string name="gmail_login">GMAIL LOGIN</string>
+    <string name="gmail_login">GOOGLE LOGIN</string>
     <string name="guest_login">GUEST LOGIN</string>
 
     <!---> Login Activity <-->
