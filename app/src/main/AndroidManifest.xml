@@ -41,9 +41,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".BaseActivity" />
-        <activity android:name=".BaseActivity" />
         <activity android:name=".login.SignupActivity" />
-        <activity android:name=".login.GoogleActivity"></activity>
+        <activity android:name=".login.GoogleActivity" />
     </application>
 
 </manifest>

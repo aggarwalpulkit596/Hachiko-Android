@@ -1,12 +1,9 @@
 package com.hachiko.hachiko
 
-import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.view.WindowManager
 import com.hachiko.hachiko.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.startActivity
 
 class MainActivity : BaseActivity() {
 
@@ -14,9 +11,8 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 //should be done like this
-        otpLoginBtn.setOnClickListener{
-            val intent=Intent(this,LoginActivity::class.java)
-            startActivity(intent)
+        otpLoginBtn.setOnClickListener {
+            startActivity<LoginActivity>()
         }
 
     }

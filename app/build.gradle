@@ -21,6 +21,8 @@ android {
         }
     }
 }
+ext.ankoVersion = '0.10.6'
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -37,6 +39,18 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:16.0.3'
     implementation 'com.google.firebase:firebase-auth:16.0.4'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
+    def anko = [
+            // commons
+            'commons',
+            // layouts
+            'sdk25', 'appcompat-v7', 'support-v4',
+            // coroutines
+            'sdk25-coroutines', 'appcompat-v7-coroutines', 'coroutines', 'recyclerview-v7', 'constraint-layout'
+//            'design',  'recyclerview-v7', 'percent', 'cardview-v7'
+    ]
+    anko.each { name ->
+        implementation "org.jetbrains.anko:anko-$name:$ankoVersion"
+    }
 
 
 }
