@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/login_button_background_corner"
         android:text="@string/gmail_login"
-        android:id="@+id/gmailLoginBtn"
+        android:id="@+id/googleLoginBtn"
         android:layout_below="@+id/otpLoginBtn"
         android:textColor="@color/white"
         android:layout_marginTop="20dp"/>
@@ -34,7 +34,7 @@
         android:background="@drawable/login_button_background_corner"
         android:text="@string/guest_login"
         android:id="@+id/guestLoginBtn"
-        android:layout_below="@+id/gmailLoginBtn"
+        android:layout_below="@+id/googleLoginBtn"
         android:textColor="@color/white"
         android:layout_marginTop="20dp"/>
 

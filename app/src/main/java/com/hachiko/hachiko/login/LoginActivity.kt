@@ -13,7 +13,7 @@ class LoginActivity : BaseActivity() {
         setContentView(R.layout.activity_login)
 
         loginBtn.setOnClickListener {
-            startActivity<OTPActivity>("PHONENO" to phoneNo.text)
+            startActivity<OTPActivity>("PHONENO" to "+91${phoneNo.text}")
         }
 
     }
