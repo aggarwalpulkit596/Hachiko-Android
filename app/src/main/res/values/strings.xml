@@ -12,6 +12,7 @@
     <string name="otp_login">OTP LOGIN</string>
     <string name="gmail_login">GOOGLE LOGIN</string>
     <string name="guest_login">GUEST LOGIN</string>
+    <string name="google_sign_in">GOOGLE SIGN IN</string>
 
     <!---> Login Activity <-->
     <string name="send_otp">SEND OTP</string>
@@ -21,6 +22,15 @@
     <string name="otp_short">OTP is too short</string>
     <string name="user_exist">USER EXIST</string>
     <string name="otp_incorrect">INCORRECT OTP</string>
+    <string name="enter_your_number">Enter your phone number</string>
+    <string name="verifying_your_number">Verifying your number</string>
+    <string name="otp_sent_to_number">We have sent an OTP to </string>
+    <string name="resend_otp">RESEND OTP</string>
+    <string name="wait_for_otp">Wait for OTP(sec) : </string>
+    <string name="otp_resent">OTP has been resent</string>
+    <string name="otp_recieved">OTP received</string>
+    <string name="otp_verified">OTP Verified</string>
+    <string name="otp_sign_in">OTP SIGN IN</string>
 
     <!---> SignUp Activity <-->
     <string name="sign_up">Sign Up</string>

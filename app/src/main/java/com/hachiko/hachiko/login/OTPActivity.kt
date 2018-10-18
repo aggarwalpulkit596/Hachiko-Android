@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.provider.Telephony
 import android.support.v4.content.ContextCompat
 import android.telephony.SmsMessage
@@ -17,6 +18,7 @@ import android.widget.Toast
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.FirebaseException
+import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.PhoneAuthCredential
@@ -24,8 +26,10 @@ import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.hachiko.hachiko.BaseActivity
 import com.hachiko.hachiko.R
+import com.hachiko.hachiko.sharedPreferences.PrefManager
 import com.hachiko.hachiko.utils.Otpreciver
 import kotlinx.android.synthetic.main.activity_otp.*
+import org.jetbrains.anko.toast
 import java.util.concurrent.TimeUnit
 
 class OTPActivity : BaseActivity() {
@@ -42,6 +46,8 @@ class OTPActivity : BaseActivity() {
     lateinit var reciever: Otpreciver
     lateinit var messageotp:String
     lateinit var otpmessage:String
+    var mtimer: CountDownTimer? = null
+    lateinit var prefManager:PrefManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,12 +56,16 @@ class OTPActivity : BaseActivity() {
         val i =intent
         phoneNo=i.getStringExtra("PHONENO")
 
+        otpSentToNumber.text=getString(R.string.otp_sent_to_number)+" ${phoneNo}"
+
         mAuth= FirebaseAuth.getInstance()
         db= FirebaseFirestore.getInstance()
 
         if(!checkPermission()){
             requestPermission()
         }
+
+        prefManager= PrefManager(this)
 
         intentFilter= IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION)
         intentFilter.priority=100
@@ -74,27 +84,29 @@ class OTPActivity : BaseActivity() {
 
             override fun onVerificationFailed(p0: FirebaseException?) {
                 Log.d("Verification FAILED",p0.toString())
+                if (p0 is FirebaseTooManyRequestsException) {
+                    toast("Quota exceeded")
+                    mVerificationProgress = false
+
+                }
             }
         }
 
+        loginBtn.isEnabled=false
+        loginBtn.setOnClickListener{
+            settimer()
+            toast(getString(R.string.otp_resent))
+            resendVerificationCode(phoneNo,mResendToken)
+            loginBtn.isEnabled=false
+        }
+
         phoneAuth(phoneNo)
+        settimer()
         verifyOtp()
-        verifyotpbtn.setOnClickListener(View.OnClickListener {
-            if (otpedittext.text.length == 6 && mVerificationProgress) {
-                verifyotpbtn.isEnabled = false
 
-            } else if (otpedittext.text.isEmpty()) {
-
-                showToast(getString(R.string.otp_empty))
-
-            } else if (otpedittext.text.length < 6) {
-                showToast(getString(R.string.otp_short))
-            } else {
-                val credential = PhoneAuthProvider.getCredential(mVerificationId, otpedittext.text.toString())
-                signInWithPhoneAuthCredential(credential)
-            }
-
-        })
+        backButton.setOnClickListener{
+            finish()
+        }
 
     }
 
@@ -119,6 +131,9 @@ class OTPActivity : BaseActivity() {
                 Toast.makeText(this@OTPActivity,messageotp,Toast.LENGTH_SHORT).show()
                 Log.d("OTP","MESSAGE "+messageotp.split(" ")[0])
                 otpedittext.setText(otpmessage)
+                mtimer!!.cancel()
+                resendOTP.text=getString(R.string.otp_recieved)
+                loginBtn.isEnabled=false
             }
         }
         this@OTPActivity.registerReceiver(reciever,intentFilter)
@@ -154,6 +169,9 @@ class OTPActivity : BaseActivity() {
                                 .get()
                                 .addOnCompleteListener({
                                     if(it.result!!.exists()){
+                                        resendOTP.text=getString(R.string.otp_verified)
+                                        loginBtn.isEnabled=false
+                                        prefManager.saveString(PrefManager.SIGN_IN_METHOD,getString(R.string.otp_sign_in))
                                         showToast(getString(R.string.user_exist))
                                     }else{
                                         val signupIntent=Intent(this,SignupActivity::class.java)
@@ -183,6 +201,33 @@ class OTPActivity : BaseActivity() {
 
     private fun showToast(message:String){
         Toast.makeText(applicationContext,message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun settimer() {
+        mtimer = object : CountDownTimer(90000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val seconds = (millisUntilFinished / 1000).toInt()
+                resendOTP.text="Resend (" + String.format("%02d", seconds) + " sec)"
+            }
+
+            override fun onFinish() {
+                resendOTP.text=getString(R.string.resend_otp)
+                loginBtn.isEnabled=true
+            }
+        }.start()
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mtimer?.cancel()
+        this@OTPActivity.unregisterReceiver(reciever)
+
+    }
+
+    override fun onBackPressed() {
+       // super.onBackPressed()
+        finish()
     }
 
 }

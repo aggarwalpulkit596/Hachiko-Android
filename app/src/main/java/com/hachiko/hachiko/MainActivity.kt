@@ -11,6 +11,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.hachiko.hachiko.login.LoginActivity
+import com.hachiko.hachiko.sharedPreferences.PrefManager
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
@@ -19,16 +20,19 @@ class MainActivity : BaseActivity() {
 
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mGoogleSignInClient: GoogleSignInClient
+    lateinit var prefManager:PrefManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//should be done like this
+
         otpLoginBtn.setOnClickListener {
             startActivity<LoginActivity>()
         }
 
         mAuth = FirebaseAuth.getInstance()
+
+        prefManager= PrefManager(this)
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -41,6 +45,46 @@ class MainActivity : BaseActivity() {
             googleSignIn()
         }
 
+        guestLoginBtn.setOnClickListener{
+            signInAnonymously()
+        }
+
+        linkAcct.setOnClickListener{
+            linkAccount()
+        }
+
+    }
+
+    private fun signInAnonymously() {
+        mAuth.signInAnonymously()
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        Log.d("GUESTLOGIN", "signInAnonymously:success")
+                        toast("signInAnonymously:success")
+                       // linkAccount()
+                    } else {
+                        Log.w("GUESTLOGIN", "signInAnonymously:failure", task.exception)
+                        toast("Anonymous Authentication failed")
+                    }
+                }
+    }
+
+    private fun linkAccount() {
+
+        val googleIdToken=""
+        val credential = GoogleAuthProvider.getCredential(googleIdToken, null)
+
+        Log.d("GUESTLOGIN","credential: "+credential+"\nLINKING ACCOUNT with google now")
+
+        mAuth.currentUser?.linkWithCredential(credential)
+                ?.addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        toast("linkWithCredential:success")
+                    } else {
+                        Log.w("GUESTLOGIN", "linkWithCredential:failure", task.exception)
+                        toast("linkWithCredential:failure")
+                    }
+                }
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -54,11 +98,7 @@ class MainActivity : BaseActivity() {
                 val account = task.getResult(ApiException::class.java)
                 firebaseAuthWithGoogle(account!!)
             } catch (e: ApiException) {
-                // Google Sign In failed, update UI appropriately
                 Log.w("GOOGLE LOGIN", "Google sign in failed", e)
-                // [START_EXCLUDE]
-                //updateUI(null)
-                // [END_EXCLUDE]
             }
 
         }
@@ -74,7 +114,8 @@ class MainActivity : BaseActivity() {
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d("GOOGLE LOGIN", "signInWithCredential:success")
-                        showToast("GOOGLE LOGIN SUCCESS")
+                        toast("GOOGLE LOGIN SUCCESS")
+                        prefManager.saveString(PrefManager.SIGN_IN_METHOD,getString(R.string.google_sign_in))
                         val user = mAuth.currentUser
 //                        updateUI(user)
                     } else {
@@ -96,6 +137,7 @@ class MainActivity : BaseActivity() {
 
     companion object {
         private val RC_SIGN_IN = 9001
+        private val LINK_ACCT=1
     }
 
     private fun showToast(message: String) {

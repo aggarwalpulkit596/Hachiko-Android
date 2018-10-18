@@ -1,35 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".login.LoginActivity"
-    android:paddingStart="15dp"
-    android:paddingEnd="15dp"
-    android:background="@drawable/login_button_background">
+    android:orientation="vertical">
 
-    <EditText
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:id="@+id/phoneNo"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="5dp">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_back_arrow"
+                android:background="@null"
+                android:id="@+id/backButton"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="@color/colorPrimary"
         android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:textColor="@color/white"
-        android:drawableLeft="@drawable/ic_action_country_code"
-        android:layout_centerInParent="true"
-        android:background="@drawable/login_button_background_corner"/>
-    <Button
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/enter_your_number"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/loginBtn"
-        android:layout_centerInParent="true"
-        android:text="@string/send_otp"
-        android:layout_marginStart="75dp"
-        android:layout_marginEnd="75dp"
-        android:layout_marginTop="15dp"
-        android:textColor="@color/white"
-        android:background="@drawable/login_button_background_corner"
-        android:layout_below="@+id/phoneNo"/>
+        android:paddingStart="50dp"
+        android:paddingEnd="100dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="25dp">
 
-</RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+91"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_toLeftOf="@+id/phoneNo"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/phoneNo"
+            android:layout_marginLeft="5dp"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimaryDark"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="40dp">
+
+        <com.davidmiguel.numberkeyboard.NumberKeyboard
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:keyboard="http://schemas.android.com/apk/res-auto"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            keyboard:keyboardType="integer"
+            android:keepScreenOn="true"
+            android:id="@+id/keyboard" />
+
+    </RelativeLayout>
+
+</LinearLayout>
